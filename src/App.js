@@ -25,22 +25,29 @@ class App extends Component {
   //function to check if image has already been clicked and update
   checkImage = (id) => {
     this.state.images.find((arr, i) => {
-      console.log(arr.id);
-      
+      //find clicked image in array
       if(arr.id === id) {
+        //check if image has been clicked
         if(this.state.images[i].clicked === false) {
           this.state.images[i].clicked = true;
-          this.setState({score: this.state.score + 1});
-          console.log(this.state.score);
           
+          //update score and shuffle array
+          this.setState({score: this.state.score + 1});
           this.shuffle();
           return true;
         } else {
           console.log("You lose");
+          //call end game function
+          this.endGame();
         }
-        
       }
-    })
+    });
+  }
+
+  endGame = () => {
+    this.setState({score: 0});
+    this.state.images.forEach(image => image.clicked = false);
+    this.shuffle();
   }
 
   // Map over this.state.images and render a FriendCard component for each friend object
