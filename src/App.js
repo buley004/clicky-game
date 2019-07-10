@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import FriendCard from "./components/FriendCard";
+import ImageCard from "./components/ImageCard";
 import Wrapper from "./components/Wrapper";
 import Title from "./components/Title";
 import images from "./images.json";
@@ -44,19 +44,20 @@ class App extends Component {
     });
   }
 
+  //function to reset game
   endGame = () => {
     this.setState({score: 0});
     this.state.images.forEach(image => image.clicked = false);
     this.shuffle();
   }
 
-  // Map over this.state.images and render a FriendCard component for each friend object
+  // Map over this.state.images and render an ImageCard component for each image object
   render() {
     return (
       <Wrapper>
         <Title>Score: {this.state.score}</Title>
         {this.state.images.map(image => (
-          <FriendCard
+          <ImageCard
             shuffle={this.shuffle}
             checkImage={this.checkImage}
             id={image.id}
