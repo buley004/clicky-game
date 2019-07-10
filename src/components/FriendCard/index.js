@@ -3,8 +3,7 @@ import "./style.css";
 
 function FriendCard(props) {
   return (
-    // <div className="card">
-      <div className="img-container" onClick={() => props.shuffle()}>
+      <div className="img-container" onClick={() => props.checkImage(props.id)}>
         <img src={props.image} />
       </div>
 

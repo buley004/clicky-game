@@ -7,12 +7,14 @@ import images from "./images.json";
 class App extends Component {
   // Setting this.state.images to the images json array
   state = {
-    images
+    images,
+    score: 0
   };
 
+  //function to shuffle the image order
   shuffle = () => {
     let temp = this.state.images.slice();
-
+    
     for (let i = temp.length - 1; i > 0; i--) {
       let j = Math.floor(Math.random() * (i + 1));
       [temp[i], temp[j]] = [temp[j], temp[i]];
@@ -20,14 +22,36 @@ class App extends Component {
     this.setState({ images: temp });
   }
 
+  //function to check if image has already been clicked and update
+  checkImage = (id) => {
+    this.state.images.find((arr, i) => {
+      console.log(arr.id);
+      
+      if(arr.id === id) {
+        if(this.state.images[i].clicked === false) {
+          this.state.images[i].clicked = true;
+          this.setState({score: this.state.score + 1});
+          console.log(this.state.score);
+          
+          this.shuffle();
+          return true;
+        } else {
+          console.log("You lose");
+        }
+        
+      }
+    })
+  }
+
   // Map over this.state.images and render a FriendCard component for each friend object
   render() {
     return (
       <Wrapper>
-        <Title>images List</Title>
+        <Title>Score: {this.state.score}</Title>
         {this.state.images.map(image => (
           <FriendCard
             shuffle={this.shuffle}
+            checkImage={this.checkImage}
             id={image.id}
             key={image.id}
             image={image.image}
